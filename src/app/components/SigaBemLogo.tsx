@@ -10,7 +10,6 @@ export function SigaBemLogo({ height = 40 }: SigaBemLogoProps) {
       src={logoImage}
       alt="Siga Bem"
       height={height}
-      referrerPolicy="no-referrer"
       style={{
         height,
         width: "auto",

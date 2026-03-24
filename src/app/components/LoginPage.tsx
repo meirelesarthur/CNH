@@ -42,7 +42,6 @@ export function LoginPage() {
           src={imageLogin}
           alt="Siga Bem Autoescola"
           className="w-full h-full object-cover"
-          referrerPolicy="no-referrer"
         />
         <div className="absolute bottom-12 left-12 z-20 text-white max-w-md">
           <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: "'Sora', sans-serif" }}>
