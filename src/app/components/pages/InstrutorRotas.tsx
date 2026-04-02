@@ -12,6 +12,7 @@ const TAXA_PLATAFORMA = 0.10;
 const mockVeiculos = [
   { id: "1", modelo: "Chevrolet Onix 1.0", ano: "2024", placa: "ABC-1D23", cor: "Branco" },
   { id: "2", modelo: "Hyundai HB20 1.0", ano: "2023", placa: "DEF-4G56", cor: "Prata" },
+  { id: "3", modelo: "Honda CG 160", ano: "2024", placa: "MTO-9R12", cor: "Preto" },
 ];
 
 interface Rota {

@@ -21,66 +21,68 @@ const allAulas: Record<string, {
   valor: string;
   avaliacao: number;
   status: string;
+  fotos: string;
+  tipoVeiculo: "Veículo" | "Moto";
   distancia: string;
   observacoes: string;
   pontosPercorridos: string[];
   feedback?: string;
 }> = {
   "1": {
-    id: "1", instrutor: "Roberto Silva", instrutorAvatar: "RS", rota: "Rota Centro",
-    data: "17/03/2026", hora: "08:00", duracao: "50 min", veiculo: "Chevrolet Onix 1.0",
+    id: "1", instrutor: "Roberto Silva", instrutorAvatar: "RS", fotos: "https://i.pravatar.cc/150?u=1", rota: "Rota Centro",
+    data: "17/03/2026", hora: "08:00", duracao: "50 min", veiculo: "Chevrolet Onix 1.0", tipoVeiculo: "Veículo",
     placa: "ABC-1D23", categoria: "B", valor: "R$ 120,00", avaliacao: 5, status: "concluída",
     distancia: "12 km", observacoes: "Aluna demonstrou boa evolução em baliza e semáforos.",
     pontosPercorridos: ["Av. Paulista", "R. Augusta", "Pça da República", "R. Consolação"],
     feedback: "Excelente aula! Me senti muito mais confiante.",
   },
   "2": {
-    id: "2", instrutor: "Roberto Silva", instrutorAvatar: "RS", rota: "Rota Zona Norte",
-    data: "14/03/2026", hora: "10:00", duracao: "45 min", veiculo: "Chevrolet Onix 1.0",
+    id: "2", instrutor: "Roberto Silva", instrutorAvatar: "RS", fotos: "https://i.pravatar.cc/150?u=1", rota: "Rota Zona Norte",
+    data: "14/03/2026", hora: "10:00", duracao: "45 min", veiculo: "Chevrolet Onix 1.0", tipoVeiculo: "Veículo",
     placa: "ABC-1D23", categoria: "B", valor: "R$ 120,00", avaliacao: 4, status: "concluída",
     distancia: "10 km", observacoes: "Precisa melhorar em ladeiras íngremes e conversões à esquerda.",
     pontosPercorridos: ["Av. Casa Verde", "R. Voluntários da Pátria", "Pça do Mandaqui"],
   },
   "3": {
-    id: "3", instrutor: "Maria Santos", instrutorAvatar: "MS", rota: "Rota Detran",
-    data: "12/03/2026", hora: "14:00", duracao: "30 min", veiculo: "Hyundai HB20 1.0",
+    id: "3", instrutor: "Maria Santos", instrutorAvatar: "MS", fotos: "https://i.pravatar.cc/150?u=2", rota: "Rota Detran",
+    data: "12/03/2026", hora: "14:00", duracao: "30 min", veiculo: "Hyundai HB20 1.0", tipoVeiculo: "Veículo",
     placa: "DEF-4G56", categoria: "B", valor: "R$ 180,00", avaliacao: 5, status: "concluída",
     distancia: "5 km", observacoes: "Simulação de exame realizada com sucesso. Aluna aprovada na simulação.",
     pontosPercorridos: ["Detran Entrada", "Av. do Estado", "Retorno", "Detran Saída"],
     feedback: "Ótima simulação! Instrutora muito paciente.",
   },
   "4": {
-    id: "4", instrutor: "Roberto Silva", instrutorAvatar: "RS", rota: "Rota Centro",
-    data: "10/03/2026", hora: "08:00", duracao: "50 min", veiculo: "Chevrolet Onix 1.0",
-    placa: "ABC-1D23", categoria: "B", valor: "R$ 120,00", avaliacao: 5, status: "concluída",
-    distancia: "12 km", observacoes: "Foco em estacionamento paralelo e sinalização de vias.",
-    pontosPercorridos: ["Av. Paulista", "R. da Consolação", "R. Haddock Lobo"],
+    id: "4", instrutor: "Carlos Dias", instrutorAvatar: "CD", fotos: "https://i.pravatar.cc/150?u=3", rota: "Rota Zona Leste",
+    data: "10/03/2026", hora: "08:00", duracao: "50 min", veiculo: "Honda CG 160", tipoVeiculo: "Moto",
+    placa: "MTO-9R12", categoria: "A", valor: "R$ 110,00", avaliacao: 5, status: "concluída",
+    distancia: "15 km", observacoes: "Foco em corredor e equilíbrio em baixa velocidade.",
+    pontosPercorridos: ["Radial Leste", "Tatuapé", "Penha"],
   },
   "5": {
-    id: "5", instrutor: "Maria Santos", instrutorAvatar: "MS", rota: "Rota Centro",
-    data: "07/03/2026", hora: "09:00", duracao: "50 min", veiculo: "Hyundai HB20 1.0",
+    id: "5", instrutor: "Maria Santos", instrutorAvatar: "MS", fotos: "https://i.pravatar.cc/150?u=2", rota: "Rota Centro",
+    data: "07/03/2026", hora: "09:00", duracao: "50 min", veiculo: "Hyundai HB20 1.0", tipoVeiculo: "Veículo",
     placa: "DEF-4G56", categoria: "B", valor: "R$ 120,00", avaliacao: 4, status: "concluída",
     distancia: "12 km", observacoes: "Primeira aula com a instrutora. Boa adaptação ao novo veículo.",
     pontosPercorridos: ["Av. Paulista", "R. Augusta", "Pça da República"],
   },
   "6": {
-    id: "6", instrutor: "Fernanda Alves", instrutorAvatar: "FA", rota: "Rota Zona Norte",
-    data: "05/03/2026", hora: "14:00", duracao: "45 min", veiculo: "Fiat Mobi 1.0",
+    id: "6", instrutor: "Fernanda Alves", instrutorAvatar: "FA", fotos: "https://i.pravatar.cc/150?u=4", rota: "Rota Zona Norte",
+    data: "05/03/2026", hora: "14:00", duracao: "45 min", veiculo: "Fiat Mobi 1.0", tipoVeiculo: "Veículo",
     placa: "GHI-7J89", categoria: "B", valor: "R$ 120,00", avaliacao: 5, status: "concluída",
     distancia: "10 km", observacoes: "Treino de curvas e lombadas. Aluna evoluiu bastante na condução defensiva.",
     pontosPercorridos: ["Av. Casa Verde", "R. Voluntários da Pátria", "Pça do Mandaqui"],
     feedback: "Muito boa a aula, gostei da rota diferente.",
   },
   "7": {
-    id: "7", instrutor: "Roberto Silva", instrutorAvatar: "RS", rota: "Rota Centro",
-    data: "25/03/2026", hora: "14:00", duracao: "50 min", veiculo: "Chevrolet Onix 1.0",
+    id: "7", instrutor: "Roberto Silva", instrutorAvatar: "RS", fotos: "https://i.pravatar.cc/150?u=1", rota: "Rota Centro",
+    data: "25/03/2026", hora: "14:00", duracao: "50 min", veiculo: "Chevrolet Onix 1.0", tipoVeiculo: "Veículo",
     placa: "ABC-1D23", categoria: "B", valor: "R$ 120,00", avaliacao: 0, status: "agendada",
     distancia: "12 km", observacoes: "Aula focada em baliza.",
     pontosPercorridos: ["Av. Paulista", "R. Augusta", "Pça da República"],
   },
   "8": {
-    id: "8", instrutor: "Maria Santos", instrutorAvatar: "MS", rota: "Rota Detran",
-    data: "28/03/2026", hora: "09:00", duracao: "50 min", veiculo: "Hyundai HB20 1.0",
+    id: "8", instrutor: "Maria Santos", instrutorAvatar: "MS", fotos: "https://i.pravatar.cc/150?u=2", rota: "Rota Detran",
+    data: "28/03/2026", hora: "09:00", duracao: "50 min", veiculo: "Hyundai HB20 1.0", tipoVeiculo: "Veículo",
     placa: "DEF-4G56", categoria: "B", valor: "R$ 180,00", avaliacao: 0, status: "agendada",
     distancia: "5 km", observacoes: "Simulação de exame prático.",
     pontosPercorridos: ["Detran Entrada", "Av. do Estado", "Retorno", "Detran Saída"],
@@ -159,11 +161,9 @@ export function AulaDetalhe() {
             </div>
           </div>
 
-          {/* Instructor */}
+          {/* Instructor Profile Style Header */}
           <div className="flex items-center gap-3 p-3 rounded-xl mb-3" style={{ backgroundColor: c.textGhost }}>
-            <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: c.accentSoft, color: c.accent, fontSize: 13, fontWeight: 700 }}>
-              {aula.instrutorAvatar}
-            </div>
+            <img src={aula.fotos} alt={aula.instrutor} className="w-12 h-12 rounded-full object-cover border-2" style={{ borderColor: c.accentSoft }} />
             <div className="flex-1">
               <div className="flex items-center gap-1.5">
                 <User size={13} style={{ color: c.textFaint }} />
@@ -197,7 +197,7 @@ export function AulaDetalhe() {
             <div className="p-3 rounded-xl" style={{ backgroundColor: c.textGhost }}>
               <div className="flex items-center gap-1.5 mb-1">
                 <Car size={12} style={{ color: c.accent }} />
-                <span style={{ fontSize: 10, color: c.textFaint, textTransform: "uppercase", letterSpacing: "0.05em" }}>Veículo</span>
+                <span style={{ fontSize: 10, color: c.textFaint, textTransform: "uppercase", letterSpacing: "0.05em" }}>{aula.tipoVeiculo}</span>
               </div>
               <p style={{ fontSize: 13, fontWeight: 600, color: c.text }}>{aula.veiculo}</p>
               <p style={{ fontSize: 11, color: c.textMuted }}>{aula.placa}</p>

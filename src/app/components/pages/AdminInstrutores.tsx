@@ -5,11 +5,11 @@ import { DataTable } from "../DataTable";
 import { Plus, X, Star, CheckCircle2, Clock } from "lucide-react";
 
 const mockInstrutores = [
-  { id: "1", nome: "Roberto Silva", email: "roberto@email.com", telefone: "(11) 99999-1001", categoria: "B", veiculo: "Onix 2024", avaliacao: 4.8, aulas: 156, status: "ativo" },
-  { id: "2", nome: "Maria Santos", email: "maria@email.com", telefone: "(11) 99999-1002", categoria: "A/B", veiculo: "HB20 2023", avaliacao: 4.9, aulas: 203, status: "ativo" },
-  { id: "3", nome: "Carlos Dias", email: "carlos@email.com", telefone: "(11) 99999-1003", categoria: "B", veiculo: "Kwid 2024", avaliacao: 4.5, aulas: 89, status: "inativo" },
-  { id: "4", nome: "Fernanda Alves", email: "fernanda@email.com", telefone: "(11) 99999-1004", categoria: "B", veiculo: "Mobi 2023", avaliacao: 4.7, aulas: 134, status: "ativo" },
-  { id: "5", nome: "Paulo Rocha", email: "paulo@email.com", telefone: "(11) 99999-1005", categoria: "A/B", veiculo: "Argo 2024", avaliacao: 4.6, aulas: 112, status: "ativo" },
+  { id: "1", nome: "Roberto Silva", email: "roberto@email.com", telefone: "(11) 99999-1001", categoria: "B", veiculo: "Onix 2024", avaliacao: 4.8, aulas: 156, status: "ativo", foto: "https://i.pravatar.cc/150?u=1", biografia: "Especialista em direção defensiva e alunos com medo de dirigir. Paciente e atencioso." },
+  { id: "2", nome: "Maria Santos", email: "maria@email.com", telefone: "(11) 99999-1002", categoria: "A/B", veiculo: "HB20 2023", avaliacao: 4.9, aulas: 203, status: "ativo", foto: "https://i.pravatar.cc/150?u=2", biografia: "Instrutora premiada com foco em percursos no centro e baliza perfeita." },
+  { id: "3", nome: "Carlos Dias", email: "carlos@email.com", telefone: "(11) 99999-1003", categoria: "A", veiculo: "Honda CG 160", avaliacao: 4.5, aulas: 89, status: "inativo", foto: "https://i.pravatar.cc/150?u=3", biografia: "Focado em aulas de moto para o dia a dia e entregadores." },
+  { id: "4", nome: "Fernanda Alves", email: "fernanda@email.com", telefone: "(11) 99999-1004", categoria: "B", veiculo: "Mobi 2023", avaliacao: 4.7, aulas: 134, status: "ativo", foto: "https://i.pravatar.cc/150?u=4", biografia: "Especializada em rotas tranquilas e pacientes iniciantes." },
+  { id: "5", nome: "Paulo Rocha", email: "paulo@email.com", telefone: "(11) 99999-1005", categoria: "A/B", veiculo: "Argo 2024", avaliacao: 4.6, aulas: 112, status: "ativo", foto: "https://i.pravatar.cc/150?u=5", biografia: "Aulas dinâmicas e focadas na aprovação rápida do Detran." },
 ];
 
 export function AdminInstrutores() {
@@ -44,9 +44,13 @@ export function AdminInstrutores() {
               {/* Top Row: Avatar + Name/Email (Left) and Categoria (Right) */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: c.accentSoft, color: c.accent, fontSize: 13, fontWeight: 700 }}>
-                    {item.nome.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
-                  </div>
+                  {item.foto ? (
+                    <img src={item.foto} alt={item.nome} className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: c.accentSoft, color: c.accent, fontSize: 13, fontWeight: 700 }}>
+                      {item.nome.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
+                    </div>
+                  )}
                   <div>
                     <p style={{ fontWeight: 500, color: c.text, fontSize: 15 }}>{item.nome}</p>
                     <p style={{ fontSize: 12.5, color: c.textMuted }}>{item.email}</p>
@@ -78,9 +82,13 @@ export function AdminInstrutores() {
           {
             key: "nome", label: "Nome", render: (item) => (
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: c.accentSoft, color: c.accent, fontSize: 11, fontWeight: 700 }}>
-                  {item.nome.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
-                </div>
+                {item.foto ? (
+                  <img src={item.foto} alt={item.nome} className="w-8 h-8 rounded-full object-cover flex-shrink-0" />
+                ) : (
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: c.accentSoft, color: c.accent, fontSize: 11, fontWeight: 700 }}>
+                    {item.nome.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
+                  </div>
+                )}
                 <div>
                   <p style={{ fontWeight: 500, color: c.text, fontSize: 14 }}>{item.nome}</p>
                   <p style={{ fontSize: 11.5, color: c.textMuted }}>{item.email}</p>
@@ -127,18 +135,34 @@ export function AdminInstrutores() {
               </div>
               <div className="px-5 pb-5 lg:p-6">
                 <div className="flex items-center justify-between mb-5">
-                  <h2 style={{ fontSize: 18, fontWeight: 700, color: c.text, fontFamily: "'Sora', sans-serif" }}>Novo Instrutor</h2>
+                  <h2 style={{ fontSize: 18, fontWeight: 700, color: c.text, fontFamily: "'Sora', sans-serif" }}>Perfil do Instrutor</h2>
                   <motion.button onClick={() => setShowModal(false)} className="cursor-pointer p-1" style={{ color: c.textMuted }} whileTap={{ scale: 0.9 }}><X size={20} /></motion.button>
                 </div>
+
+                <div className="flex flex-col items-center mb-6">
+                  <div className="relative mb-3">
+                    <img src="https://i.pravatar.cc/150?u=new" alt="Novo" className="w-24 h-24 rounded-full object-cover border-4" style={{ borderColor: c.bgCard }} />
+                    <motion.button className="absolute bottom-0 right-0 w-8 h-8 rounded-full flex items-center justify-center text-white cursor-pointer" style={{ backgroundColor: c.accent }} whileTap={{ scale: 0.9 }}>
+                      <Plus size={16} />
+                    </motion.button>
+                  </div>
+                  <h3 style={{ fontSize: 18, fontWeight: 700, color: c.text, fontFamily: "'Sora', sans-serif" }}>Adicionar Foto</h3>
+                  <p style={{ fontSize: 13, color: c.textMuted }}>Sua biografia visual começa aqui</p>
+                </div>
+
                 <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setShowModal(false); }}>
+                  <div>
+                    <label style={{ fontSize: 12, fontWeight: 500, color: c.textMuted, marginBottom: 6, display: "block" }}>Biografia (Sobre o instrutor)</label>
+                    <textarea placeholder="Ex: Sou apaixonado por ensinar..." rows={3} className="w-full px-4 py-3 rounded-xl focus:outline-none resize-none" style={{ fontSize: 14, backgroundColor: c.textGhost, color: c.text, border: `1px solid ${c.border}` }} />
+                  </div>
                   {[{ label: "Nome completo", placeholder: "Ex: João da Silva" }, { label: "E-mail", placeholder: "email@exemplo.com", type: "email" }, { label: "WhatsApp", placeholder: "(11) 99999-9999", type: "tel" }, { label: "Categoria (CNH)", placeholder: "Ex: A/B" }].map((field) => (
                     <div key={field.label}>
                       <label style={{ fontSize: 12, fontWeight: 500, color: c.textMuted, marginBottom: 6, display: "block" }}>{field.label}</label>
-                      <input type={field.type || "text"} placeholder={field.placeholder} className="w-full px-4 py-3 rounded-xl focus:outline-none" style={{ fontSize: 15, backgroundColor: c.textGhost, color: c.text, border: `1px solid ${c.border}` }} />
+                      <input type={field.type || "text"} placeholder={field.placeholder} className="w-full px-4 py-3 rounded-xl focus:outline-none" style={{ fontSize: 14, backgroundColor: c.textGhost, color: c.text, border: `1px solid ${c.border}` }} />
                     </div>
                   ))}
                   <motion.button type="submit" className="w-full py-3.5 rounded-xl text-white cursor-pointer" style={{ fontSize: 15, fontWeight: 600, backgroundColor: c.accent }} whileTap={{ scale: 0.98 }}>
-                    Cadastrar Instrutor
+                    Salvar Perfil
                   </motion.button>
                 </form>
               </div>

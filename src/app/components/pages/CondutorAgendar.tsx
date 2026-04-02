@@ -19,14 +19,17 @@ interface RotaDisponivel {
   distancia: string;
   valor: number;
   pontos: string[];
+  fotos: string;
+  biografia: string;
+  tipoVeiculo: "Veículo" | "Moto";
   horarios: { hora: string; disponivel: boolean }[];
 }
 
 const mockRotas: RotaDisponivel[] = [
   {
-    id: "1", instrutor: "Roberto Silva", instrutorAvatar: "RS", avaliacao: 4.8,
+    id: "1", instrutor: "Roberto Silva", fotos: "https://i.pravatar.cc/150?u=1", instrutorAvatar: "RS", avaliacao: 4.8, biografia: "Especialista em alunos com medo de dirigir. Paciente e atencioso.",
     rota: "Rota Centro", descricao: "Circuito pelo centro com semáforos e rotatórias",
-    veiculo: "Onix 2024", categoria: "B",
+    veiculo: "Onix 2024", tipoVeiculo: "Veículo", categoria: "B",
     duracao: "50 min", distancia: "12 km", valor: 120,
     pontos: ["Av. Paulista", "R. Augusta", "Pça República"],
     horarios: [
@@ -35,9 +38,9 @@ const mockRotas: RotaDisponivel[] = [
     ],
   },
   {
-    id: "2", instrutor: "Maria Santos", instrutorAvatar: "MS", avaliacao: 4.9,
+    id: "2", instrutor: "Maria Santos", fotos: "https://i.pravatar.cc/150?u=2", instrutorAvatar: "MS", avaliacao: 4.9, biografia: "Instrutora premiada com foco em percursos urbanos.",
     rota: "Rota Detran", descricao: "Simulação do trajeto oficial do exame prático",
-    veiculo: "HB20 2023", categoria: "A/B",
+    veiculo: "HB20 2023", tipoVeiculo: "Veículo", categoria: "A/B",
     duracao: "30 min", distancia: "5 km", valor: 180,
     pontos: ["Detran", "Av. do Estado", "Retorno"],
     horarios: [
@@ -46,20 +49,20 @@ const mockRotas: RotaDisponivel[] = [
     ],
   },
   {
-    id: "3", instrutor: "Roberto Silva", instrutorAvatar: "RS", avaliacao: 4.8,
-    rota: "Rota Zona Norte", descricao: "Percurso residencial com ladeiras e ruas estreitas",
-    veiculo: "Onix 2024", categoria: "B",
-    duracao: "45 min", distancia: "10 km", valor: 110,
-    pontos: ["Av. Casa Verde", "R. Voluntários", "Mandaqui"],
+    id: "3", instrutor: "Carlos Dias", fotos: "https://i.pravatar.cc/150?u=3", instrutorAvatar: "CD", avaliacao: 4.5, biografia: "Aula de moto prática para trânsito caótico de São Paulo.",
+    rota: "Rota Zona Leste", descricao: "Percurso para motociclistas com foco em corredor",
+    veiculo: "Honda CG 160", tipoVeiculo: "Moto", categoria: "A",
+    duracao: "45 min", distancia: "15 km", valor: 110,
+    pontos: ["Radial Leste", "Tatuapé", "Penha"],
     horarios: [
       { hora: "08:00", disponivel: true }, { hora: "10:00", disponivel: false },
       { hora: "14:00", disponivel: true },
     ],
   },
   {
-    id: "4", instrutor: "Fernanda Alves", instrutorAvatar: "FA", avaliacao: 4.7,
+    id: "4", instrutor: "Fernanda Alves", fotos: "https://i.pravatar.cc/150?u=4", instrutorAvatar: "FA", avaliacao: 4.7, biografia: "Rotas tranquilas para total dominância do veículo.",
     rota: "Rota Zona Norte", descricao: "Percurso com foco em direção defensiva",
-    veiculo: "Mobi 2023", categoria: "B",
+    veiculo: "Mobi 2023", tipoVeiculo: "Veículo", categoria: "B",
     duracao: "45 min", distancia: "10 km", valor: 100,
     pontos: ["Av. Casa Verde", "R. Voluntários", "Mandaqui"],
     horarios: [
@@ -68,20 +71,9 @@ const mockRotas: RotaDisponivel[] = [
     ],
   },
   {
-    id: "5", instrutor: "Carlos Dias", instrutorAvatar: "CD", avaliacao: 4.5,
-    rota: "Rota Centro Histórico", descricao: "Circuito pelo centro histórico de Campinas",
-    veiculo: "Kwid 2024", categoria: "B",
-    duracao: "40 min", distancia: "8 km", valor: 95,
-    pontos: ["Largo do Rosário", "Av. Francisco Glicério", "Barão de Jaguara"],
-    horarios: [
-      { hora: "08:00", disponivel: true }, { hora: "10:00", disponivel: true },
-      { hora: "14:00", disponivel: true }, { hora: "16:00", disponivel: true },
-    ],
-  },
-  {
-    id: "6", instrutor: "Paulo Rocha", instrutorAvatar: "PR", avaliacao: 4.6,
+    id: "6", instrutor: "Paulo Rocha", fotos: "https://i.pravatar.cc/150?u=5", instrutorAvatar: "PR", avaliacao: 4.6, biografia: "Instrutor experiente com dicas de estacionamento e baliza.",
     rota: "Rota Copacabana", descricao: "Percurso costeiro com estacionamento em via",
-    veiculo: "Argo 2024", categoria: "A/B",
+    veiculo: "Argo 2024", tipoVeiculo: "Veículo", categoria: "A/B",
     duracao: "50 min", distancia: "14 km", valor: 140,
     pontos: ["Av. Atlântica", "R. Barata Ribeiro", "Túnel Novo"],
     horarios: [
@@ -162,13 +154,11 @@ export function CondutorAgendar() {
             </motion.button>
 
             <motion.div className="rounded-2xl p-4" style={{ backgroundColor: c.bgCard, border: `1px solid ${c.border}` }}>
-              {/* Instructor */}
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: c.accentSoft, color: c.accent, fontSize: 15, fontWeight: 700 }}>
-                  {selectedRota.instrutorAvatar}
-                </div>
+              {/* Instructor Social Profile Style */}
+              <div className="flex items-center gap-4 mb-3">
+                <img src={selectedRota.fotos} alt={selectedRota.instrutor} className="w-16 h-16 rounded-full object-cover border-2" style={{ borderColor: c.accentSoft }} />
                 <div className="flex-1">
-                  <p style={{ fontSize: 16, fontWeight: 600, color: c.text }}>{selectedRota.instrutor}</p>
+                  <p style={{ fontSize: 18, fontWeight: 700, color: c.text, fontFamily: "'Sora', sans-serif" }}>{selectedRota.instrutor}</p>
                   <span className="flex items-center gap-1" style={{ fontSize: 13, color: "#f59e0b", fontWeight: 600 }}>
                     <Star size={14} fill="#f59e0b" />{selectedRota.avaliacao}
                   </span>
@@ -180,6 +170,7 @@ export function CondutorAgendar() {
                   <p style={{ fontSize: 11, color: c.textMuted }}>por aula</p>
                 </div>
               </div>
+              <p style={{ fontSize: 13, color: c.textMuted, marginBottom: 16, fontStyle: "italic" }}>"{selectedRota.biografia}"</p>
 
               {/* Route info */}
               <div className="rounded-xl p-3 mb-3" style={{ backgroundColor: c.textGhost }}>
@@ -251,6 +242,7 @@ export function CondutorAgendar() {
                   <p>Instrutor: <strong style={{ color: c.text }}>{selectedRota.instrutor}</strong></p>
                   <p>Rota: <strong style={{ color: c.text }}>{selectedRota.rota}</strong></p>
                   <p>Horário: <strong style={{ color: c.text }}>{selectedHorario}</strong></p>
+                  <p>Tipo: <strong style={{ color: c.text }}>{selectedRota.tipoVeiculo}</strong></p>
                   <p>Veículo: <strong style={{ color: c.text }}>{selectedRota.veiculo} • Cat. {selectedRota.categoria}</strong></p>
                   <div className="h-px my-2" style={{ backgroundColor: c.border }} />
                   <p className="flex items-center justify-between" style={{ fontSize: 15 }}>
@@ -293,14 +285,13 @@ export function CondutorAgendar() {
                     transition={{ delay: i * 0.05 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    {/* Instructor hero section */}
-                    <div className="flex items-center gap-3.5 p-4 pb-3">
-                      <div className="rounded-2xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: c.accentSoft, color: c.accent, fontSize: 16, fontWeight: 700, fontFamily: "'Sora', sans-serif", width: 52, height: 52 }}>
-                        {r.instrutorAvatar}
-                      </div>
+                    {/* Instructor hero section: Social profile style */}
+                    <div className="flex items-start gap-3.5 p-4 pb-3">
+                      <img src={r.fotos} alt={r.instrutor} className="w-12 h-12 rounded-full object-cover border-2 flex-shrink-0" style={{ borderColor: c.accentSoft }} />
                       <div className="flex-1 min-w-0">
-                        <p className="truncate" style={{ fontSize: 17, fontWeight: 700, color: c.text, fontFamily: "'Sora', sans-serif" }}>{r.instrutor}</p>
-                        <div className="flex items-center gap-2 mt-0.5">
+                        <p className="truncate" style={{ fontSize: 16, fontWeight: 700, color: c.text, fontFamily: "'Sora', sans-serif" }}>{r.instrutor}</p>
+                        <p className="truncate" style={{ fontSize: 12, color: c.textMuted, marginTop: 1 }}>"{r.biografia}"</p>
+                        <div className="flex items-center gap-2 mt-2">
                           <span className="flex items-center gap-0.5" style={{ fontSize: 13, color: "#f59e0b", fontWeight: 600 }}>
                             <Star size={13} fill="#f59e0b" />{r.avaliacao}
                           </span>

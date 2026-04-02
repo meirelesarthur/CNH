@@ -4,8 +4,9 @@ import { useColors } from "../ThemeContext";
 import { Car, Plus, X, CheckCircle2, AlertTriangle, Calendar } from "lucide-react";
 
 const mockVeiculos = [
-  { id: "1", modelo: "Chevrolet Onix 1.0", ano: "2024", placa: "ABC-1D23", cor: "Branco", vencimentoSeguro: "15/08/2026", status: "ativo" },
-  { id: "2", modelo: "Hyundai HB20 1.0", ano: "2023", placa: "DEF-4G56", cor: "Prata", vencimentoSeguro: "20/04/2026", status: "manutenção" },
+  { id: "1", modelo: "Chevrolet Onix 1.0", ano: "2024", placa: "ABC-1D23", cor: "Branco", vencimentoSeguro: "15/08/2026", status: "ativo", tipo: "Veículo" },
+  { id: "2", modelo: "Hyundai HB20 1.0", ano: "2023", placa: "DEF-4G56", cor: "Prata", vencimentoSeguro: "20/04/2026", status: "manutenção", tipo: "Veículo" },
+  { id: "3", modelo: "Honda CG 160", ano: "2024", placa: "MTO-9R12", cor: "Preto", vencimentoSeguro: "12/10/2026", status: "ativo", tipo: "Moto" },
 ];
 
 export function InstrutorVeiculos() {
@@ -34,7 +35,7 @@ export function InstrutorVeiculos() {
                 </div>
                 <div>
                   <p style={{ fontSize: 15, fontWeight: 600, color: c.text }}>{v.modelo}</p>
-                  <p style={{ fontSize: 12, color: c.textMuted }}>{v.ano} • {v.cor}</p>
+                  <p style={{ fontSize: 12, color: c.textMuted }}>{v.tipo} • {v.ano} • {v.cor}</p>
                 </div>
               </div>
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg" style={{
@@ -80,7 +81,14 @@ export function InstrutorVeiculos() {
                   <motion.button onClick={() => setShowModal(false)} className="cursor-pointer p-1" style={{ color: c.textMuted }} whileTap={{ scale: 0.9 }}><X size={20} /></motion.button>
                 </div>
                 <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setShowModal(false); }}>
-                  {[{ label: "Modelo", placeholder: "Ex: Chevrolet Onix 1.0" }, { label: "Ano", placeholder: "2024" }, { label: "Placa", placeholder: "ABC-1D23" }, { label: "Cor", placeholder: "Branco" }].map((f) => (
+                  <div>
+                    <label style={{ fontSize: 12, fontWeight: 500, color: c.textMuted, marginBottom: 6, display: "block" }}>Tipo</label>
+                    <select className="w-full px-4 py-3 rounded-xl focus:outline-none" style={{ fontSize: 15, backgroundColor: c.textGhost, color: c.text, border: `1px solid ${c.border}` }}>
+                      <option>Veículo</option>
+                      <option>Moto</option>
+                    </select>
+                  </div>
+                  {[{ label: "Modelo", placeholder: "Ex: Chevrolet Onix 1.0 ou Honda CG" }, { label: "Ano", placeholder: "2024" }, { label: "Placa", placeholder: "ABC-1D23" }, { label: "Cor", placeholder: "Branco" }].map((f) => (
                     <div key={f.label}>
                       <label style={{ fontSize: 12, fontWeight: 500, color: c.textMuted, marginBottom: 6, display: "block" }}>{f.label}</label>
                       <input placeholder={f.placeholder} className="w-full px-4 py-3 rounded-xl focus:outline-none" style={{ fontSize: 15, backgroundColor: c.textGhost, color: c.text, border: `1px solid ${c.border}` }} />
