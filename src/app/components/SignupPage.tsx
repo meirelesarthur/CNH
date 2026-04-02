@@ -4,31 +4,32 @@ import { useNavigate, Link } from "react-router";
 import { useAuth, type UserRole } from "./AuthContext";
 import { useColors } from "./ThemeContext";
 import { SigaBemLogo } from "./SigaBemLogo";
-import { Shield, UserCheck, GraduationCap, Eye, EyeOff } from "lucide-react";
+import { UserCheck, GraduationCap, Eye, EyeOff } from "lucide-react";
 import imageLogin from "../../assets/ImageLogin.jpg";
 
-const roles: { role: UserRole; label: string; desc: string; icon: React.ElementType }[] = [
-  { role: "admin", label: "Administração", desc: "Gestão completa", icon: Shield },
-  { role: "instrutor", label: "Instrutor", desc: "Aulas e veículos", icon: UserCheck },
-  { role: "condutor", label: "Condutor", desc: "Agende aulas", icon: GraduationCap },
+const signupRoles: { role: UserRole; label: string; desc: string; icon: React.ElementType }[] = [
+  { role: "condutor", label: "Condutor", desc: "Quero aprender a dirigir", icon: GraduationCap },
+  { role: "instrutor", label: "Instrutor", desc: "Quero ensinar rotas", icon: UserCheck },
 ];
 
-export function LoginPage() {
+export function SignupPage() {
   const c = useColors();
   const { login } = useAuth();
   const navigate = useNavigate();
   const [selectedRole, setSelectedRole] = useState<UserRole>("condutor");
-  const [email, setEmail] = useState("teste@email.com");
-  const [password, setPassword] = useState("12345678");
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
+    if (!nome || !email || !password) {
       setError("Preencha todos os campos.");
       return;
     }
+    // Simulate signup & login
     login(email, password, selectedRole);
     navigate(`/${selectedRole}`);
   };
@@ -45,15 +46,15 @@ export function LoginPage() {
         />
         <div className="absolute bottom-12 left-12 z-20 text-white max-w-md">
           <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: "'Sora', sans-serif" }}>
-            O seu caminho para a independência começa aqui.
+            Acelere pro seu novo futuro!
           </h2>
           <p className="text-lg opacity-90">
-            Acompanhe suas aulas, gerencie seus horários e conquiste sua habilitação com a Siga Bem.
+            Crie sua conta na Siga Bem e tenha o controle total da sua evolução.
           </p>
         </div>
       </div>
 
-      {/* Right side - Login Form */}
+      {/* Right side - Signup Form */}
       <div className="flex-1 flex flex-col items-center justify-center px-5 py-8 relative">
         <motion.div
           className="w-full max-w-sm"
@@ -62,23 +63,24 @@ export function LoginPage() {
           transition={{ duration: 0.5 }}
         >
           {/* Logo */}
-          <div className="flex justify-center mb-8">
-            <SigaBemLogo height={112} />
+          <div className="flex justify-center mb-6">
+            <SigaBemLogo height={96} />
           </div>
 
           {/* Heading */}
           <h1 style={{ fontSize: 28, fontWeight: 700, color: c.text, fontFamily: "'Sora', sans-serif", textAlign: "center", marginBottom: 4 }}>
-            Bem-vindo
+            Criar Conta
           </h1>
-          <p style={{ fontSize: 15, color: c.textMuted, textAlign: "center", marginBottom: 32 }}>
-            Selecione seu perfil para entrar
+          <p style={{ fontSize: 15, color: c.textMuted, textAlign: "center", marginBottom: 28 }}>
+            Como você deseja utilizar a plataforma?
           </p>
 
           {/* Role selector */}
-          <div className="grid grid-cols-3 gap-3 mb-8">
-            {roles.map(({ role, label, desc, icon: Icon }) => (
+          <div className="grid grid-cols-2 gap-3 mb-6">
+            {signupRoles.map(({ role, label, desc, icon: Icon }) => (
               <motion.button
                 key={role}
+                type="button"
                 onClick={() => setSelectedRole(role)}
                 className="flex flex-col items-center gap-2 py-4 px-2 rounded-2xl cursor-pointer transition-colors"
                 style={{
@@ -89,14 +91,25 @@ export function LoginPage() {
                 whileTap={{ scale: 0.95 }}
               >
                 <Icon size={24} />
-                <span style={{ fontSize: 13, fontWeight: 600 }}>{label}</span>
+                <span style={{ fontSize: 14, fontWeight: 600 }}>{label}</span>
                 <span className="hidden sm:block" style={{ fontSize: 11, color: selectedRole === role ? c.accent : c.textFaint, opacity: 0.8, textAlign: "center" }}>{desc}</span>
               </motion.button>
             ))}
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label style={{ fontSize: 13, fontWeight: 500, color: c.textMuted, marginBottom: 8, display: "block" }}>Nome completo</label>
+              <input
+                type="text"
+                value={nome}
+                onChange={(e) => { setNome(e.target.value); setError(""); }}
+                placeholder="João da Silva"
+                className="w-full px-4 py-3.5 rounded-xl focus:outline-none transition-shadow focus:ring-2"
+                style={{ fontSize: 15, backgroundColor: c.textGhost, color: c.text, border: `1px solid ${c.border}`, '--tw-ring-color': c.accent } as React.CSSProperties}
+              />
+            </div>
             <div>
               <label style={{ fontSize: 13, fontWeight: 500, color: c.textMuted, marginBottom: 8, display: "block" }}>E-mail</label>
               <input
@@ -134,19 +147,15 @@ export function LoginPage() {
               whileTap={{ scale: 0.98 }}
               whileHover={{ opacity: 0.9 }}
             >
-              Entrar como {roles.find(r => r.role === selectedRole)?.label}
+              Criar Conta
             </motion.button>
           </form>
 
           <p style={{ fontSize: 14, color: c.textMuted, textAlign: "center", marginTop: 24 }}>
-            Não tem uma conta?{" "}
-            <Link to="/signup" style={{ color: c.accent, fontWeight: 600, textDecoration: "none" }}>
-              Crie aqui
+            Já tem uma conta?{" "}
+            <Link to="/login" style={{ color: c.accent, fontWeight: 600, textDecoration: "none" }}>
+              Entre aqui
             </Link>
-          </p>
-
-          <p style={{ fontSize: 13, color: c.textFaint, textAlign: "center", marginTop: 20 }}>
-            Demo: use qualquer e-mail e senha
           </p>
         </motion.div>
       </div>
