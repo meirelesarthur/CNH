@@ -1,13 +1,25 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useColors } from "../ThemeContext";
-import { Plus, Search, Trash2, Edit2, Car, Settings, CheckCircle2 } from "lucide-react";
+import { Plus, Search, Trash2, Edit2, Car, Settings, CheckCircle2, Upload, Camera, Image as ImageIcon } from "lucide-react";
 import { DataTable } from "../DataTable";
 
 export function AdminFrota() {
   const c = useColors();
   const [searchTerm, setSearchTerm] = useState("");
   const [showAdd, setShowAdd] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const mockFrota = [
     { id: "101", modelo: "Chevrolet Onix 1.0 (Frota)", tipo: "Veículo", ano: "2024", cor: "Prata", placa: "ABC-5X12", foto: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=400", valorHora: 150, disponivel: true },
@@ -93,8 +105,42 @@ export function AdminFrota() {
                </div>
                              <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
                   <div>
-                    <label className="block mb-2" style={{ fontSize: 12, fontWeight: 600, color: c.textMuted }}>URL da Foto</label>
-                    <input className="w-full px-4 py-2.5 rounded-xl border focus:outline-none" style={{ backgroundColor: c.textGhost, borderColor: c.border }} placeholder="https://exemplo.com/foto.jpg" />
+                    <label className="block mb-2" style={{ fontSize: 12, fontWeight: 600, color: c.textMuted }}>Foto do Veículo</label>
+                    <div 
+                      className="relative h-40 rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-2 overflow-hidden transition-colors"
+                      style={{ 
+                        backgroundColor: c.textGhost, 
+                        borderColor: selectedImage ? c.accent : c.border 
+                      }}
+                    >
+                      {selectedImage ? (
+                        <>
+                          <img src={selectedImage} alt="Preview" className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                             <div className="flex flex-col items-center gap-1 text-white">
+                                <Upload size={20} />
+                                <span className="text-[10px] font-bold">TROCAR FOTO</span>
+                             </div>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="flex flex-col items-center gap-2 text-center px-4">
+                           <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: c.accentSoft, color: c.accent }}>
+                              <Camera size={20} />
+                           </div>
+                           <div>
+                              <p style={{ fontSize: 13, fontWeight: 600, color: c.text }}>Clique para anexar imagem</p>
+                              <p style={{ fontSize: 11, color: c.textFaint }}>PNG, JPG ou WEBP (Max. 5MB)</p>
+                           </div>
+                        </div>
+                      )}
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={handleImageChange}
+                        className="absolute inset-0 opacity-0 cursor-pointer" 
+                      />
+                    </div>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                      <div>
