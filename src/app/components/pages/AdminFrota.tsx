@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useColors } from "../ThemeContext";
-import { Plus, Search, Trash2, Edit2, Car, Settings, CheckCircle2, Upload, Camera, Image as ImageIcon } from "lucide-react";
+import { Plus, Search, Trash2, Edit2, Car, Settings, CheckCircle2, Upload, Camera, Image as ImageIcon, X, Calendar, UserCheck } from "lucide-react";
 import { DataTable } from "../DataTable";
 
 export function AdminFrota() {
@@ -9,6 +9,7 @@ export function AdminFrota() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showAdd, setShowAdd] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedVeiculo, setSelectedVeiculo] = useState<any>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -22,10 +23,15 @@ export function AdminFrota() {
   };
 
   const mockFrota = [
-    { id: "101", modelo: "Chevrolet Onix 1.0 (Frota)", tipo: "Veículo", ano: "2024", cor: "Prata", placa: "ABC-5X12", foto: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=400", valorHora: 150, disponivel: true },
-    { id: "102", modelo: "Hyundai HB20 1.0 (Frota)", tipo: "Veículo", ano: "2023", cor: "Branco", placa: "DEF-2Y98", foto: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=400", valorHora: 165, disponivel: true },
-    { id: "103", modelo: "Honda CG 160 (Frota)", tipo: "Moto", ano: "2024", cor: "Vermelho", placa: "MTO-3Z45", foto: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=400", valorHora: 110, disponivel: true },
-    { id: "104", modelo: "Volkswagen Polo (Frota)", tipo: "Veículo", ano: "2024", cor: "Cinza", placa: "POL-0A87", foto: "https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&q=80&w=400", valorHora: 170, disponivel: false },
+    { id: "101", modelo: "Chevrolet Onix 1.0 (Frota)", tipo: "Veículo", ano: "2024", cor: "Prata", placa: "ABC-5X12", foto: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=400", valorHora: 150, disponivel: true,
+      historicoLocacoes: [
+          { id: "l1", condutor: "Ana Costa", data: "17/03/2026", hora: "08:00", valor: 150 },
+          { id: "l2", condutor: "Carlos Eduardo", data: "15/03/2026", hora: "14:00", valor: 150 }
+      ]
+    },
+    { id: "102", modelo: "Hyundai HB20 1.0 (Frota)", tipo: "Veículo", ano: "2023", cor: "Branco", placa: "DEF-2Y98", foto: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=400", valorHora: 165, disponivel: true, historicoLocacoes: [] },
+    { id: "103", modelo: "Honda CG 160 (Frota)", tipo: "Moto", ano: "2024", cor: "Vermelho", placa: "MTO-3Z45", foto: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=400", valorHora: 110, disponivel: true, historicoLocacoes: [] },
+    { id: "104", modelo: "Volkswagen Polo (Frota)", tipo: "Veículo", ano: "2024", cor: "Cinza", placa: "POL-0A87", foto: "https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&q=80&w=400", valorHora: 170, disponivel: false, historicoLocacoes: [] },
   ];
 
   return (
@@ -79,8 +85,11 @@ export function AdminFrota() {
                 <CheckCircle2 size={12} /> {v.disponivel ? "Disponível" : "Ocupado"}
              </span>
           )},
-          { key: "actions", label: "Ações", render: () => (
+          { key: "actions", label: "Ações", render: (v) => (
              <div className="flex items-center gap-2">
+                <button onClick={() => setSelectedVeiculo(v)} className="px-3 py-1.5 rounded-lg font-semibold text-xs cursor-pointer hover:opacity-80" style={{ backgroundColor: c.textGhost, color: c.text }}>
+                    Detalhes
+                </button>
                 <button className="p-2 rounded-lg hover:bg-black/5 cursor-pointer" style={{ color: c.textFaint }}><Edit2 size={16} /></button>
                 <button className="p-2 rounded-lg hover:bg-red-50 cursor-pointer" style={{ color: c.danger }}><Trash2 size={16} /></button>
              </div>
@@ -190,6 +199,92 @@ export function AdminFrota() {
                   <button className="flex-1 py-3 rounded-xl border font-bold" style={{ borderColor: c.border, color: c.textMuted }} onClick={() => setShowAdd(false)}>Cancelar</button>
                   <button className="flex-1 py-3 rounded-xl text-white font-bold" style={{ backgroundColor: c.accent }} onClick={() => setShowAdd(false)}>Salvar Veículo</button>
                </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {selectedVeiculo && (
+          <>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 bg-black/50" onClick={() => setSelectedVeiculo(null)} />
+            <motion.div
+              initial={{ y: "100%", opacity: 1 }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 30, stiffness: 350 }}
+              className="fixed bottom-0 left-0 right-0 lg:bottom-auto lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 z-50 lg:w-full lg:max-w-2xl rounded-t-3xl lg:rounded-2xl flex flex-col"
+              style={{ backgroundColor: c.bgCard, paddingBottom: "env(safe-area-inset-bottom, 20px)", maxHeight: "90vh" }}
+            >
+              <div className="lg:hidden flex justify-center py-3 flex-shrink-0">
+                <div className="w-10 h-1 rounded-full" style={{ backgroundColor: c.textGhost }} />
+              </div>
+              <div className="flex items-center gap-4 px-5 pb-4 pt-2 lg:p-6 flex-shrink-0 border-b" style={{ borderColor: c.border }}>
+                 {selectedVeiculo.foto ? (
+                    <img src={selectedVeiculo.foto} alt={selectedVeiculo.modelo} className="w-16 h-16 rounded-xl object-cover" />
+                 ) : (
+                    <div className="w-16 h-16 rounded-xl flex items-center justify-center" style={{ backgroundColor: c.textGhost, color: c.textFaint }}>
+                        <Car size={24} />
+                    </div>
+                 )}
+                 <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                        <h2 style={{ fontSize: 18, fontWeight: 700, color: c.text, fontFamily: "'Sora', sans-serif" }}>{selectedVeiculo.modelo}</h2>
+                        <motion.button onClick={() => setSelectedVeiculo(null)} className="cursor-pointer p-1" style={{ color: c.textMuted }} whileTap={{ scale: 0.9 }}><X size={20} /></motion.button>
+                    </div>
+                    <p style={{ fontSize: 13, color: c.textMuted }}>{selectedVeiculo.placa} • {selectedVeiculo.cor} • {selectedVeiculo.ano}</p>
+                 </div>
+              </div>
+
+              <div className="p-5 overflow-y-auto space-y-6">
+                 {/* Basic Stats */}
+                 <div className="grid grid-cols-4 gap-3">
+                    <div className="p-3 rounded-xl col-span-2" style={{ backgroundColor: c.textGhost }}>
+                       <p style={{ fontSize: 11, color: c.textFaint, textTransform: "uppercase", fontWeight: 600 }}>Status Atual</p>
+                       <p style={{ fontSize: 16, fontWeight: 700, color: selectedVeiculo.disponivel ? "#22c55e" : "#ef4444", fontFamily: "'Sora', sans-serif" }}>
+                          {selectedVeiculo.disponivel ? "Disponível para Exames" : "Indisponível / Ocupado"}
+                       </p>
+                    </div>
+                    <div className="p-3 rounded-xl" style={{ backgroundColor: c.textGhost }}>
+                       <p style={{ fontSize: 11, color: c.textFaint, textTransform: "uppercase", fontWeight: 600 }}>Tipo</p>
+                       <p style={{ fontSize: 16, fontWeight: 700, color: c.text, fontFamily: "'Sora', sans-serif" }}>{selectedVeiculo.tipo}</p>
+                    </div>
+                    <div className="p-3 rounded-xl" style={{ backgroundColor: c.textGhost }}>
+                       <p style={{ fontSize: 11, color: c.textFaint, textTransform: "uppercase", fontWeight: 600 }}>Hora</p>
+                       <p style={{ fontSize: 16, fontWeight: 700, color: c.text, fontFamily: "'Sora', sans-serif" }}>R${selectedVeiculo.valorHora}</p>
+                    </div>
+                 </div>
+
+                 {/* Histórico Rental */}
+                 <div>
+                    <h3 className="flex items-center gap-2 mb-3" style={{ fontSize: 15, fontWeight: 700, color: c.text, fontFamily: "'Sora', sans-serif" }}>
+                        <Calendar size={18} style={{ color: c.accent }} /> Histórico de Locações do Veículo
+                    </h3>
+                    {selectedVeiculo.historicoLocacoes && selectedVeiculo.historicoLocacoes.length > 0 ? (
+                        <div className="space-y-2">
+                            {selectedVeiculo.historicoLocacoes.map((locacao: any) => (
+                                <div key={locacao.id} className="flex items-center justify-between p-3 rounded-xl" style={{ backgroundColor: c.bg, border: `1px solid ${c.border}` }}>
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 rounded-full flex items-center justify-center bg-amber-100 text-amber-600">
+                                            <UserCheck size={16} />
+                                        </div>
+                                        <div>
+                                            <p style={{ fontSize: 14, fontWeight: 600, color: c.text }}>{locacao.condutor}</p>
+                                            <p style={{ fontSize: 12, color: c.textMuted }}>{locacao.data} às {locacao.hora}</p>
+                                        </div>
+                                    </div>
+                                    <div className="text-right">
+                                        <p style={{ fontSize: 14, fontWeight: 700, color: c.accent }}>R${locacao.valor}</p>
+                                        <p style={{ fontSize: 11, color: c.textMuted }}>Receita</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p style={{ fontSize: 13, color: c.textMuted, textAlign: "center", padding: 12 }}>Nenhuma locação registrada para este veículo.</p>
+                    )}
+                 </div>
+              </div>
             </motion.div>
           </>
         )}
