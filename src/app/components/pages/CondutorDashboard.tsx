@@ -1,7 +1,7 @@
 import { useColors } from "../ThemeContext";
 import { useAuth } from "../AuthContext";
 import { StatCard } from "../StatCard";
-import { Calendar, Clock, Star, BookOpen } from "lucide-react";
+import { Calendar, Clock, Star, BookOpen, Car } from "lucide-react";
 import { motion } from "motion/react";
 
 const nextClasses = [
@@ -29,7 +29,7 @@ export function CondutorDashboard() {
       <div className="grid grid-cols-3 gap-3">
         <StatCard title="Aulas" value="12" icon={BookOpen} />
         <StatCard title="Próxima" value="18/03" icon={Calendar} />
-        <StatCard title="Prática" value="10h" change="+2h" positive icon={Clock} />
+        <StatCard title="Locação" value="Exame" icon={Car} />
       </div>
 
       {/* Next classes */}

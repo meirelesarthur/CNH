@@ -16,6 +16,7 @@ const navByRole: Record<UserRole, NavItem[]> = {
   admin: [
     { label: "Início", icon: LayoutDashboard, path: "/admin" },
     { label: "Instrutores", icon: UserCheck, path: "/admin/instrutores" },
+    { label: "Frota", icon: Car, path: "/admin/frota" },
     { label: "Alunos", icon: GraduationCap, path: "/admin/alunos" },
     { label: "Financeiro", icon: DollarSign, path: "/admin/financeiro" },
   ],
@@ -28,7 +29,8 @@ const navByRole: Record<UserRole, NavItem[]> = {
   ],
   condutor: [
     { label: "Início", icon: LayoutDashboard, path: "/condutor" },
-    { label: "Agendar", icon: Plus, path: "/condutor/agendar" },
+    { label: "Agendar Aula", icon: Plus, path: "/condutor/agendar" },
+    { label: "Locar Veículo", icon: Car, path: "/condutor/locacao" },
     { label: "Minhas Aulas", icon: History, path: "/condutor/historico" },
   ],
 };
