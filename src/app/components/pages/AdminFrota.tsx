@@ -10,9 +10,10 @@ export function AdminFrota() {
   const [showAdd, setShowAdd] = useState(false);
 
   const mockFrota = [
-    { id: "101", modelo: "Chevrolet Onix 1.0", tipo: "Veículo", ano: "2024", cor: "Prata", placa: "ABC-5X12", valorHora: 150 },
-    { id: "102", modelo: "Hyundai HB20 1.0", tipo: "Veículo", ano: "2023", cor: "Branco", placa: "DEF-2Y98", valorHora: 165 },
-    { id: "103", modelo: "Honda CG 160", tipo: "Moto", ano: "2024", cor: "Vermelho", placa: "MTO-3Z45", valorHora: 110 },
+    { id: "101", modelo: "Chevrolet Onix 1.0 (Frota)", tipo: "Veículo", ano: "2024", cor: "Prata", placa: "ABC-5X12", foto: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=400", valorHora: 150, disponivel: true },
+    { id: "102", modelo: "Hyundai HB20 1.0 (Frota)", tipo: "Veículo", ano: "2023", cor: "Branco", placa: "DEF-2Y98", foto: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=400", valorHora: 165, disponivel: true },
+    { id: "103", modelo: "Honda CG 160 (Frota)", tipo: "Moto", ano: "2024", cor: "Vermelho", placa: "MTO-3Z45", foto: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=400", valorHora: 110, disponivel: true },
+    { id: "104", modelo: "Volkswagen Polo (Frota)", tipo: "Veículo", ano: "2024", cor: "Cinza", placa: "POL-0A87", foto: "https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&q=80&w=400", valorHora: 170, disponivel: false },
   ];
 
   return (
@@ -61,9 +62,9 @@ export function AdminFrota() {
              </div>
           )},
           { key: "valorHora", label: "Locação/Hora", render: (v) => <span style={{ fontWeight: 700, color: c.accent }}>R${v.valorHora}</span> },
-          { key: "status", label: "Status", render: () => (
-             <span className="flex items-center gap-1 px-2 py-0.5 rounded-lg" style={{ backgroundColor: "rgba(34,197,94,0.1)", color: "#22c55e", fontSize: 11, fontWeight: 600 }}>
-                <CheckCircle2 size={12} /> Ativo
+          { key: "status", label: "Status", render: (v) => (
+             <span className="flex items-center gap-1 px-2 py-0.5 rounded-lg" style={{ backgroundColor: v.disponivel ? "rgba(34,197,94,0.1)" : "rgba(239,68,68,0.1)", color: v.disponivel ? "#22c55e" : "#ef4444", fontSize: 11, fontWeight: 600 }}>
+                <CheckCircle2 size={12} /> {v.disponivel ? "Disponível" : "Ocupado"}
              </span>
           )},
           { key: "actions", label: "Ações", render: () => (
@@ -90,8 +91,11 @@ export function AdminFrota() {
                  <h2 style={{ fontSize: 18, fontWeight: 700, color: c.text, fontFamily: "'Sora', sans-serif" }}>Cadastrar na Frota</h2>
                  <button onClick={() => setShowAdd(false)} style={{ color: c.textFaint }}><Plus size={24} className="rotate-45" /></button>
                </div>
-               
-               <div className="space-y-4">
+                             <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
+                  <div>
+                    <label className="block mb-2" style={{ fontSize: 12, fontWeight: 600, color: c.textMuted }}>URL da Foto</label>
+                    <input className="w-full px-4 py-2.5 rounded-xl border focus:outline-none" style={{ backgroundColor: c.textGhost, borderColor: c.border }} placeholder="https://exemplo.com/foto.jpg" />
+                  </div>
                   <div className="grid grid-cols-2 gap-3">
                      <div>
                         <label className="block mb-2" style={{ fontSize: 12, fontWeight: 600, color: c.textMuted }}>Modelo</label>
@@ -102,16 +106,37 @@ export function AdminFrota() {
                         <input className="w-full px-4 py-2.5 rounded-xl border focus:outline-none" style={{ backgroundColor: c.textGhost, borderColor: c.border }} placeholder="ABC-1234" />
                      </div>
                   </div>
-                  <div>
-                    <label className="block mb-2" style={{ fontSize: 12, fontWeight: 600, color: c.textMuted }}>Tipo de Veículo</label>
-                    <select className="w-full px-4 py-2.5 rounded-xl border focus:outline-none appearance-none" style={{ backgroundColor: c.textGhost, borderColor: c.border }}>
-                       <option>Veículo</option>
-                       <option>Moto</option>
-                    </select>
+                  <div className="grid grid-cols-2 gap-3">
+                     <div>
+                        <label className="block mb-2" style={{ fontSize: 12, fontWeight: 600, color: c.textMuted }}>Ano</label>
+                        <input className="w-full px-4 py-2.5 rounded-xl border focus:outline-none" style={{ backgroundColor: c.textGhost, borderColor: c.border }} placeholder="2024" />
+                     </div>
+                     <div>
+                        <label className="block mb-2" style={{ fontSize: 12, fontWeight: 600, color: c.textMuted }}>Cor</label>
+                        <input className="w-full px-4 py-2.5 rounded-xl border focus:outline-none" style={{ backgroundColor: c.textGhost, borderColor: c.border }} placeholder="Branco, Prata..." />
+                     </div>
                   </div>
-                  <div>
-                    <label className="block mb-2" style={{ fontSize: 12, fontWeight: 600, color: c.textMuted }}>Valor Hora (R$)</label>
-                    <input type="number" className="w-full px-4 py-2.5 rounded-xl border focus:outline-none" style={{ backgroundColor: c.textGhost, borderColor: c.border }} placeholder="150" />
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                        <label className="block mb-2" style={{ fontSize: 12, fontWeight: 600, color: c.textMuted }}>Tipo de Veículo</label>
+                        <select className="w-full px-4 py-2.5 rounded-xl border focus:outline-none appearance-none" style={{ backgroundColor: c.textGhost, borderColor: c.border }}>
+                        <option>Veículo</option>
+                        <option>Moto</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label className="block mb-2" style={{ fontSize: 12, fontWeight: 600, color: c.textMuted }}>Valor Hora (R$)</label>
+                        <input type="number" className="w-full px-4 py-2.5 rounded-xl border focus:outline-none" style={{ backgroundColor: c.textGhost, borderColor: c.border }} placeholder="150" />
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 rounded-xl" style={{ backgroundColor: c.textGhost }}>
+                     <div>
+                        <p style={{ fontSize: 13, fontWeight: 600, color: c.text }}>Disponível para Locação</p>
+                        <p style={{ fontSize: 11, color: c.textMuted }}>Exibir para alunos na lista</p>
+                     </div>
+                     <div className="w-12 h-6 rounded-full p-1 cursor-pointer transition-colors" style={{ backgroundColor: c.accent }}>
+                        <div className="w-4 h-4 rounded-full bg-white ml-auto" />
+                     </div>
                   </div>
                </div>
 
